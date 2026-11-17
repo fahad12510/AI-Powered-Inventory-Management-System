@@ -1,0 +1,53 @@
+[
+  {
+    "type": "standard",
+    "product_id": "P1001",
+    "name": "Wireless Mouse",
+    "category": "Electronics",
+    "price": 1800.0,
+    "quantity": 18,
+    "reorder_level": 5,
+    "description": "Wireless optical mouse."
+  },
+  {
+    "type": "standard",
+    "product_id": "P1002",
+    "name": "USB-C Cable",
+    "category": "Accessories",
+    "price": 650.0,
+    "quantity": 4,
+    "reorder_level": 10,
+    "description": "USB-C charging and data cable."
+  },
+  {
+    "type": "perishable",
+    "product_id": "P1003",
+    "name": "Bottled Juice",
+    "category": "Beverages",
+    "price": 220.0,
+    "quantity": 0,
+    "reorder_level": 12,
+    "description": "Fruit juice bottle.",
+    "expiry_date": "2027-03-31"
+  },
+  {
+    "type": "standard",
+    "product_id": "P1004",
+    "name": "Notebook",
+    "category": "Stationery",
+    "price": 180.0,
+    "quantity": 35,
+    "reorder_level": 8,
+    "description": "A5 ruled notebook."
+  },
+  {
+    "type": "standard",
+    "product_id": "P1794920353945",
+    "name": "tophy",
+    "category": "tophy",
+    "price": 60.0,
+    "quantity": 50,
+    "reorder_level": 5,
+    "description": "tophy"
+  }
+]

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StockWise | AI Inventory</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/"><span class="brand-mark">S</span><span>StockWise<small>INVENTORY INTELLIGENCE</small></span></a>
+  <div class="top-right"><span class="live-dot"></span> Inventory workspace</div>
+</header>
+<main class="container">
+  <section class="welcome">
+    <div><p class="eyebrow">OVERVIEW</p><h1>Inventory Dashboard</h1><p class="muted">Monitor stock, manage products and make smarter decisions.</p></div>
+    <button class="primary" id="addTop">＋ Add product</button>
+  </section>
+  <section class="stats-grid" id="stats">
+    <article class="stat-card"><span class="stat-label">Total products</span><strong id="totalProducts">0</strong><span class="stat-foot">Unique product records</span></article>
+    <article class="stat-card"><span class="stat-label">Available units</span><strong id="totalUnits">0</strong><span class="stat-foot">Across all products</span></article>
+    <article class="stat-card"><span class="stat-label">Inventory value</span><strong id="inventoryValue">PKR 0</strong><span class="stat-foot">Quantity × unit price</span></article>
+    <article class="stat-card warning"><span class="stat-label">Low stock</span><strong id="lowStock">0</strong><span class="stat-foot">At or below reorder level</span></article>
+    <article class="stat-card danger"><span class="stat-label">Out of stock</span><strong id="outStock">0</strong><span class="stat-foot">No units available</span></article>
+  </section>
+
+  <section class="content-grid">
+    <div class="panel inventory-panel">
+      <div class="panel-heading"><div><p class="eyebrow">CATALOGUE</p><h2>Product inventory</h2></div><span class="count-pill" id="productCount">0 items</span></div>
+      <div class="toolbar"><label class="searchbox">⌕ <input id="search" placeholder="Search by name, ID or category..." aria-label="Search products"></label><button class="secondary" id="refresh">Refresh</button></div>
+      <div class="table-wrap"><table><thead><tr><th>PRODUCT</th><th>CATEGORY</th><th>PRICE</th><th>QTY</th><th>STATUS</th><th>ACTIONS</th></tr></thead><tbody id="productRows"></tbody></table></div>
+      <div class="empty" id="emptyState">No products found. Add your first product to get started.</div>
+    </div>
+    <aside class="panel ai-panel">
+      <div class="ai-heading"><span class="ai-icon">✦</span><div><p class="eyebrow">POWERED BY GROQ</p><h2>AI Intelligence</h2></div></div>
+      <p class="muted small">Get useful insights based on your current inventory records.</p>
+      <button class="ai-button" data-ai="analysis"><span>◈</span><span><b>Analyze inventory</b><small>Stock health and practical insights</small></span><i>→</i></button>
+      <button class="ai-button" data-ai="reorder"><span>↗</span><span><b>Smart reorder suggestions</b><small>Products to review for restocking</small></span><i>→</i></button>
+      <div class="ai-result" id="aiResult"><span class="result-spark">✦</span><p>AI results will appear here. Choose an action above to begin.</p></div>
+      <div class="assistant"><label for="question">Ask your inventory assistant</label><div class="ask-row"><input id="question" placeholder="e.g. Which items are low?"><button id="askBtn" aria-label="Ask AI">➤</button></div></div>
+      {% if not ai_available %}<p class="notice">AI is not configured yet. Add your Groq API key to <code>.env</code>. Product management still works.</p>{% endif %}
+    </aside>
+  </section>
+
+  <section class="panel form-panel" id="formPanel">
+    <div class="panel-heading"><div><p class="eyebrow">PRODUCT DETAILS</p><h2 id="formTitle">Add a product</h2></div><button class="icon-button" id="closeForm" aria-label="Close form">×</button></div>
+    <form id="productForm">
+      <input type="hidden" id="productId">
+      <div class="form-grid">
+        <label>Product name *<input id="name" required maxlength="100" placeholder="e.g. Wireless Mouse"></label>
+        <label>Category *<input id="category" required maxlength="60" placeholder="e.g. Electronics"></label>
+        <label>Unit price (PKR) *<input id="price" type="number" min="0" step="0.01" required></label>
+        <label>Quantity *<input id="quantity" type="number" min="0" step="1" required></label>
+        <label>Reorder level<input id="reorder" type="number" min="0" step="1" value="5"></label>
+        <label class="check-label"><input id="perishable" type="checkbox"> Perishable product</label>
+        <label id="expiryWrap" class="hidden">Expiry date<input id="expiry" type="date"></label>
+        <label class="full">Description<textarea id="description" rows="2" maxlength="1000" placeholder="Short product details..."></textarea></label>
+      </div>
+      <div class="form-actions"><button type="button" class="secondary" id="generateDescription">✦ Generate description</button><span class="spacer"></span><button type="button" class="secondary" id="cancelForm">Cancel</button><button class="primary" type="submit">Save product</button></div>
+      <p class="form-message" id="formMessage"></p>
+    </form>
+  </section>
+</main>
+<div class="toast" id="toast" role="status"></div>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body></html>
